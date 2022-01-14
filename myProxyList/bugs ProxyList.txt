@@ -1,0 +1,10 @@
+Port:Proxy by ip
+Transparent proxy list
+GU - United Kingdom
+Availability (Anonymity)
+95.37.26.216:8080
+IP checker / Anonymity test (color)
+257.178.9.186:8080
+HTTS
+140%
+Rus

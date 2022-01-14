@@ -1,0 +1,83 @@
+email состоит: им€ пользовател€ (им€ почтового €щика), им€ хоста (домена, поддомена)
+local_part@domain
+recipient, sign @, subdomain, top-level domain
+
+Test Cases For Email id Field validation
+
+Positive Test Cases for email id field
+Verify the field by entering the valid email address.
+Verify the field With Email contains dot in the address field
+Verify With Email contains dot with subdomain
+Verify the email id filed With Plus sign is considered valid character.
+Verify With Square bracket around IP address is considered valid.
+Verify the email id filed With Quotes around email is considered valid
+Verify email id field With Digits in address are valid
+Verify email id With Digits in address are valid
+Verify the email id filed With Underscore in the address field is valid
+Verify the email id filed With .name is valid Top Level Domain name
+Verify With Dot in Top Level Domain name also considered valid (use co.jp as example here)
+Verify With Dash in address field is valid
+
+Negative Test Cases for email id field
+Verify the email id filed With Missing @ sign and domain
+Verify the email id text box With Garbage
+Verify the email id filed With Missing username
+Verify the email address field With Encoded html within email is invalid
+Verify  the email id field With Missing @
+Verify the email id filed With Two @ sign
+Verify  the email id text box With Leading dot in address is not allowed
+Verify the email id filed With Trailing dot in address is not allowed
+Verify email address field With Multiple dots
+Verify the email id filed With Unicode char as address
+Verify  the email id text box With Text followed email is not allowed
+Verify the email id text box  With Missing top level domain (.com/.net/.org/etc)
+Verify the email id filed With .web is not a valid top level domain
+Verify  the email id text box With Invalid IP format
+Verify  the email id text box With Multiple dot in the domain portion is invalid
+
+ѕозитивные тесты
+¬вести корректный e-mail: email@example.com
+¬вести e-mail, содержащий точку в имени пользовател€ firstname.lastname@example.com
+¬вести e-mail, содержащий точку в имени домена email@subdomain.example.com
+¬вести e-mail, содержащий плюс в имени пользовател€ firstname+lastname@example.com
+¬вести e-mail, содержащий IP-адрес домена email@123.123.123.123
+¬вести e-mail, содержащий квадратные скобки в  квадратных скобках IP-адреса домена email@123.123.123.123
+¬вести e-mail, содержащий кавычки в имени пользовател€ "email"@example.com
+¬вести e-mail, содержащий цифры в имени пользовател€ 1234567890@example.com
+¬вести e-mail, содержащий дефис в имени домена email@example-one.com
+¬вести e-mail, содержащий дефис в имени доменаfirstname-lastname@example.com
+¬вести e-mail, содержащий знак подчеркивани€ в имени пользовател€ _______@example.com
+ƒомен верхнего уровн€ name: email@domain.name
+
+List of Strange Valid Email Addresses
+much.Фmore\ unusualФ@example.com
+very.unusual.Ф@Ф.unusual.com@example.com
+very.Ф(),:;<>[]Ф.VERY.Фvery@\\ "veryФ.unusual@strange.example.com
+
+Ќегативные тесты
+ќтсутствует знак @ и им€ домена plainaddress
+ћусор в имени пользовател€ #@%^%#$@#$@#.com
+ќтсутствует им€ пользовател€ @example.com
+e-mail заключен в тег HTML Joe Smith <email@example.com>
+ќтсутствует знак @: email.example.com
+ƒва знака @: email@example@example.com
+“очка перед именем пользовател€ .email@example.com
+“очка после имени пользовател€ email.@example.com
+ƒве следующие подр€д точки в имени пользовател€ email..email@example.com
+UTF-символы ?????@example.com
+–усско€зычные адреса почты москва@москва.рф
+“екст после email: email@example.com (Joe Smith)
+ќтсутствует домен верхнего уровн€ email@example
+ƒомен верхнего уровн€ web: email@domain.web
+ƒефис перед именем домена email@-example.com
+Ќеверный формат IP-адреса email@111.222.333.44444
+ƒве точки в имени домена, следующие подр€д: email@example..com
+ƒве точки в имени пользовател€, следующие подр€д Abc..123@example.com
+
+List of Strange Invalid Email Addresses
+Ф(),:;<>[\]@example.com
+justФnotФright@example.com
+this\ is"really"not\allowed@example.com
+
+
+

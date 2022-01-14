@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Login form</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css" />
+
+
+  <script src="js/validate.js"></script>
+   <script src="js/jquery-3.2.1.min.js"></script>
+  <script src="js/moment-with-locales.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/bootstrap-datetimepicker.min.js"></script>
+   <script src="js/underscore-min.js"></script>
+</head>
+<body>
+<div class="container" style="margin:10px">   
+<div>
+
+<div><h3 class="h3">Расчет стоимости возврата билета</h3>
+<div id="accordion">
+<div class="card">
+    <div class="card-header" id="headingOne">
+      <h5 class="mb-0">
+        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          (Информация)
+        </button>
+      </h5>
+    </div>
+      <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+      <div class="card-body">
+	  <pre>
+В стоимость проезда включена стоимость билета и плацкарты.
+Стоимость плацкарты составляет:
+для общего вагона - 10%,
+для плацкартного вагона - 20%,
+для купе - 40%
+
+При отказе от поездки по причинам, не зависящим от перевозчика, и предъявлении в билетную кассу неиспользованного проездного документа (билета) на поезда с нумерованными местами, за исключением групповых проездных документов (билетов), выплачивается стоимость:
+
+проезда, состоящая из стоимости билета и стоимости плацкарты, если проездной документ (билет) предъявлен не позднее чем за 15 часов до отправления поезда со станции посадки пассажира, указанной в проездном документе (билете);
+билета и 50 процентов стоимости плацкарты, если проездной документ (билет) предъявлен менее чем за 15 часов, но не позднее чем за 4 часа до отправления поезда со станции посадки пассажира, указанной в проездном документе (билете);
+билета, если проездной документ (билет) предъявлен менее чем за 4 часа до отправления поезда со станции посадки пассажира, указанной в проездном документе (билете), и в течение одного часа после отправления поезда, без выплаты стоимости плацкарты.
+</pre>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+    <form id="main" class="form-horizontal" method="post" novalidate="">
+	        
+	<div class="form-group">
+	<label class="col-sm-2 control-label" for="ticketreturn">Дата возврата билета</label>
+  <div class="input-group col-sm-5" id="datetimepicker1" style="padding-left: 15px; width:40.5%">
+    <input id="ticketreturn" type="text" class="form-control" name="ticketreturn"/>
+    <span class="input-group-addon">
+      <span class="glyphicon glyphicon-calendar"></span>
+    </span>
+  </div>
+  <div class="col-sm-5 messages"></div>
+</div>
+
+	<div class="form-group">
+	<label class="col-sm-2 control-label" for="departure">Дата отправления</label>
+  <div class="input-group col-sm-5" id="datetimepicker2" style="padding-left: 15px; width:40.5%">
+    <input id="departure" type="text" class="form-control" name="departure"/>
+    <span class="input-group-addon">
+      <span class="glyphicon glyphicon-calendar"></span>
+    </span>
+  </div>
+  <div class="col-sm-5 messages"></div>
+</div>
+
+ <div class="form-group">
+        <label class="col-sm-2 control-label" for="carriage">Тип вагона</label>
+        <div class="col-sm-5">
+          <select id="carriage" class="form-control" name="carriage">
+            <option value="">Тип вагона</option>
+            <option value="common">Общий</option>
+            <option value="reserved">Плацкарт</option>
+            <option value="compartment">Купе</option>
+			</select>
+			<div class="messages"></div>
+			</div>        
+      </div>    
+	  
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="price">Стоимость билета</label>
+        <div class="col-sm-5">
+          <input id="price" class="form-control" type="text" placeholder="Стоимость билета" name="price">
+		  <div class="messages"></div>
+        </div>
+        
+      </div>  
+	  
+	  <div class="form-group">
+        <label class="col-sm-2 control-label" for="refund">Стоимость возврата</label>
+        <div class="col-sm-5">
+          <input id="refund" class="form-control" type="text" placeholder="Стоимость возврата" name="refund" disabled>
+        </div>        
+      </div>  
+	           
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button type="submit" class="btn btn-default">Рассчитать</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+
+<!-- Инициализация виджета "Bootstrap datetimepicker" -->
+<script>
+  $(function () {
+    // идентификатор элемента (например: #datetimepicker1), для которого необходимо инициализировать виджет Bootstrap DateTimePicker
+    $('#datetimepicker1').datetimepicker({
+                 locale: 'ru'
+             });
+$('#datetimepicker2').datetimepicker({
+                 locale: 'ru'
+             });
+
+      validate.extend(validate.validators.datetime, {        
+        parse: function(value, options) {
+          return +moment.utc(value);
+        },       
+        format: function(value, options) {
+          var format = options.dateOnly ? "DD.MM.YYYY" : "DD.MM.YYYY hh:mm";
+          return moment.utc(value).format(format);
+        }
+      });
+	  
+	   var constraints = {
+	  ticketreturn: {          
+          presence: {		  
+		message: "^Введите дату и время возврата билета"}          
+          },
+		departure: {          
+          presence: {		  
+		message: "^Введите дату и время отправления"}          
+          },          
+        carriage: {          
+          presence: {		  
+		message: "^Выберите тип вагона"}          
+          },          
+        price: {          
+          presence: {		  
+		message: "^Введите стоимость билета"}          
+          }          
+        };
+	  
+	  var form = document.querySelector("form#main");
+      form.addEventListener("submit", function(ev) {
+        ev.preventDefault();
+        handleFormSubmit(form);
+      });
+
+      // Hook up the inputs to validate on the fly
+      var inputs = document.querySelectorAll("input, textarea, select")
+      for (var i = 0; i < inputs.length; ++i) {
+        inputs.item(i).addEventListener("change", function(ev) {
+          var errors = validate(form, constraints) || {};
+          showErrorsForInput(this, errors[this.name])
+        });
+      }
+
+      function handleFormSubmit(form, input) {    
+		//console.log(constraints);	  
+        var errors = validate(form, constraints); 
+		//console.log(errors);
+        showErrors(form, errors || {});
+        if (!errors) {
+          showSuccess();
+        }
+      }
+
+      // Updates the inputs with the validation errors
+      function showErrors(form, errors) {        
+        _.each(form.querySelectorAll("input[name], select[name]"), function(input) {          
+          showErrorsForInput(input, errors && errors[input.name]);
+        });
+      }
+
+      // Shows the errors for a specific input
+      function showErrorsForInput(input, errors) {        
+        var formGroup = closestParent(input.parentNode, "form-group")          
+          , messages = formGroup.querySelector(".messages");        
+        resetFormGroup(formGroup);       
+        if (errors) {          
+          formGroup.classList.add("has-error");          
+          _.each(errors, function(error) {
+            addError(messages, error);
+          });
+        } else {          
+          formGroup.classList.add("has-success");
+        }
+      }
+
+      // Recusively finds the closest parent that has the specified class
+      function closestParent(child, className) {
+        if (!child || child == document) {
+          return null;
+        }
+        if (child.classList.contains(className)) {
+          return child;
+        } else {
+          return closestParent(child.parentNode, className);
+        }
+      }
+
+      function resetFormGroup(formGroup) {        
+        formGroup.classList.remove("has-error");
+        formGroup.classList.remove("has-success");        
+        _.each(formGroup.querySelectorAll(".help-block.error"), function(el) {
+          el.parentNode.removeChild(el);
+        });
+      }
+
+      // Adds the specified error with the following markup
+      // <p class="help-block error">[message]</p>
+      function addError(messages, error) {
+        var block = document.createElement("p");
+        block.classList.add("help-block");
+        block.classList.add("error");
+        block.innerText = error;
+        messages.appendChild(block);
+      }
+
+      function showSuccess() {
+        // Рассчитать стоимость возврата
+		dateReturn = moment($('#ticketreturn').val(), "DD.MM.YYYY hh:mm");		
+		dateDeparture = moment($('#departure').val(), "DD.MM.YYYY hh:mm");
+		//console.log(dateReturn._d);
+		
+		//Разница в часах
+		var diff = (dateDeparture._d.getTime() - dateReturn._d.getTime())/(1000.*3600);
+		//console.log(diff);
+		
+		var koef = 0; //Процент для расчета плацкарты
+switch ($('#carriage').val()){
+case 'common': 
+koef = 0.1;
+break;
+case  'reserved':
+koef = 0.2;
+break;
+case 'compartment':
+koef = 0.4;
+break;
+}		
+      //Стоимость билета и плацкарты 
+	  price = $('#price').val();
+	  priceReserved = price*koef;
+	  priceTicket = price-priceReserved;
+	  //console.log(priceReserved, priceTicket);
+	  
+	  var refund = 0; //Стоимость возврата
+if (diff>15) refund = price;
+else if (diff>4) refund = priceTicket+priceReserved*0.5;
+else if (diff>-1) refund = priceTicket;
+else refund = 0;
+	  $('#refund').val(refund);
+      }
+	  
+  });
+  
+</script>
+</body></html>
